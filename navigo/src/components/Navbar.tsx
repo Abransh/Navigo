@@ -29,15 +29,15 @@ const Navbar: React.FC = () => {
   return (
     <div data-collapse="medium" data-animation="default" data-duration="400" className="navbar_component w-nav">
       <div className="navbar_container">
-        <Link href="/" className="navbar_logo-link w-nav-brand w--current">
+        {/* <Link href="/" className="navbar_logo-link w-nav-brand w--current">
           <Image
             src="/images/logo/logo.png"
             alt="Navigo"
             width={230}
-            height={46}
+            height={10}
             className="navbar_logo-img"
           />
-        </Link>
+        </Link> */}
         <nav role="navigation" className="navbar_menu w-nav-menu">
           <div className="navbar_menu-link-wrapper">
             <div className="menu-link-item-wrapper">

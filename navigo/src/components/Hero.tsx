@@ -124,7 +124,7 @@ const Hero: React.FC = () => {
                 <Image
                   ref={heroImageRef}
                   className="hero-image-combined"
-                  src="/images/hero-image-combination.webp"
+                  src="/images/testimage1.webp"
                   width={1539}
                   height={1080}
                   alt="two photos overlapping with rough edges, the top photo features a woman sitting in a hammock smiling with sunglasses on. the bottom photo features two happy women hugging and smiling for a selfie photo."

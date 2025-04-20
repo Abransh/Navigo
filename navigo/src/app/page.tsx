@@ -4,9 +4,9 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-// import Process from '../components/Process';
-// import MarqueeButton from '../components/MarqueeButton';
-// import CardStack from '../components/CardStack';
+import Process from '../components/Process';
+import MarqueeButton from '../components/MarqueeButton';
+import CardStack from '../components/CardStack';
 
 export default function Home() {
   // Initialize lottie animations when the component mounts
@@ -56,9 +56,9 @@ export default function Home() {
     <main className="main-wrapper max-width-full">
       <Navbar />
       <Hero />
-      {/* <Process /> */}
-      {/* <MarqueeButton href="/" />
-      <CardStack /> */}
+      <Process />
+       <MarqueeButton href="/" />
+      <CardStack /> 
       
       {/* More components will be added here as they are created */}
     </main>

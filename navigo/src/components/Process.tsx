@@ -144,7 +144,7 @@ const Process: React.FC = () => {
                     <h3 className="heading-style-h4 card-layout">Get matched with local companions</h3>
                   </div>
                   <p className="text_regular-normal">
-                    We'll connect you with verified local students who share your interests and speak your language.
+                    We&apos;'ll connect you with verified local students who share your interests and speak your language.
                   </p>
                   <img
                     src="/images/edge-work.svg"
