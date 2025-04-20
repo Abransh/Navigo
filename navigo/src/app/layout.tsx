@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
 import '../styles/globals.css';
+import '../styles/fonts.css';
 import '../styles/webflow-styles.css';
 
 export const metadata: Metadata = {
@@ -137,6 +138,9 @@ export default function RootLayout({
             });
           `}
         </script>
+        
+        {/* Load Lottie Player */}
+        <script defer src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
       </body>
     </html>
   );

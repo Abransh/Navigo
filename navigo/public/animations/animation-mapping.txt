@@ -1,0 +1,2 @@
+https://cdn.prod.website-files.com/6670bf25956a84a23b306e42/66739bc8fd69993bc9f9b1b2_Animation%20-%201718852516322.json => menu-animation.json
+https://cdn.prod.website-files.com/6670bf25956a84a23b306e42/667758adec0e02a70b89464b_squiggle-animation.json => squiggle-animation.json

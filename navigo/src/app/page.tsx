@@ -7,49 +7,65 @@ import Hero from '../components/Hero';
 import Process from '../components/Process';
 import MarqueeButton from '../components/MarqueeButton';
 import CardStack from '../components/CardStack';
+// Import these components when they're completed
+// import Benefits from '../components/Benefits';
+// import Testimonials from '../components/Testimonials';
+// import Faq from '../components/Faq';
+// import Cta from '../components/Cta';
+// import Footer from '../components/Footer';
+
+// Dynamically import Lottie player to avoid SSR issues
+import dynamic from 'next/dynamic';
+const LottiePlayer = dynamic(() => import('@lottiefiles/react-lottie-player'), {
+  ssr: false
+});
 
 export default function Home() {
   // Initialize lottie animations when the component mounts
   useEffect(() => {
-    // Dynamically import Lottie (to avoid SSR issues)
-    const loadLottie = async () => {
-      try {
-       // const lottieWeb = (await import('@lottiefiles/lottie-player')).default;
+    // Find all lottie animations and initialize them
+    const initLottieAnimations = () => {
+      const lottieElements = document.querySelectorAll('[data-animation-type="lottie"]');
+      
+      lottieElements.forEach((element: Element) => {
+        const src = element.getAttribute('data-src');
+        const loop = element.getAttribute('data-loop') === '1';
+        const autoplay = element.getAttribute('data-autoplay') === '1';
         
-        // Register lottie-player custom element
-        // if (!customElements.get('lottie-player')) {
-        //   customElements.define('lottie-player', lottieWeb);
-        // }
-        
-        // Find all lottie animations and initialize them
-        const lottieElements = document.querySelectorAll('[data-animation-type="lottie"]');
-        lottieElements.forEach(element => {
-          const src = element.getAttribute('data-src');
-          if (src) {
-            const player = document.createElement('lottie-player');
-            player.setAttribute('src', src);
-            player.setAttribute('background', 'transparent');
-            player.setAttribute('speed', '1');
-            
-            // Set other attributes
-            if (element.getAttribute('data-loop') === '1') {
-              player.setAttribute('loop', 'true');
-            }
-            if (element.getAttribute('data-autoplay') === '1') {
-              player.setAttribute('autoplay', 'true');
-            }
-            
-            // Clear and append
-            element.innerHTML = '';
-            element.appendChild(player);
+        if (src && typeof window !== 'undefined') {
+          // Create a new lottie player element
+          const player = document.createElement('lottie-player');
+          player.setAttribute('src', src);
+          player.setAttribute('background', 'transparent');
+          player.setAttribute('speed', '1');
+          
+          if (loop) {
+            player.setAttribute('loop', '');
           }
-        });
-      } catch (error) {
-        console.error('Failed to load Lottie animations:', error);
-      }
+          
+          if (autoplay) {
+            player.setAttribute('autoplay', '');
+          }
+          
+          // Clear and append
+          element.innerHTML = '';
+          element.appendChild(player);
+        }
+      });
     };
     
-    loadLottie();
+    // Load Lottie script if it's not already loaded
+    if (typeof window !== 'undefined') {
+      if (!document.querySelector('script[src*="lottie-player"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js';
+        script.async = true;
+        script.onload = initLottieAnimations;
+        document.body.appendChild(script);
+      } else {
+        initLottieAnimations();
+      }
+    }
   }, []);
 
   return (
@@ -57,10 +73,16 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Process />
-       <MarqueeButton href="/" />
-      <CardStack /> 
-      
-      {/* More components will be added here as they are created */}
+      <MarqueeButton href="/" />
+      <CardStack />
+      {/* Uncomment these when components are ready
+      <Benefits />
+      <MarqueeButton href="/" />
+      <Testimonials />
+      <Faq />
+      <Cta />
+      <Footer />
+      */}
     </main>
   );
 }

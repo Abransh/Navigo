@@ -42,28 +42,26 @@ const Hero: React.FC = () => {
 
   return (
     <header className="section_hero">
-      <Image
-        src="/images/Texture-Subtle-web.webp"
+      <img
+        src="/images/testimage1.webp"
         loading="eager"
-        width={816}
-        height={816}
+        sizes="(max-width: 816px) 100vw, 816px"
+        srcSet="/images/Texture-Subtle-web-p-500.webp 500w, /images/Texture-Subtle-web.webp 816w"
         alt=""
         className="img-texture top-right"
       />
-      <Image
+      <img
         src="/images/arrow-coil.svg"
         loading="eager"
         style={{ opacity: 0 }}
         data-w-id="af76a889-3f2a-3dd7-422e-b6c1db57d1d7"
         alt=""
-        width={1500}
-        height={900}
         className="hero-coil-arrow"
       />
       <div className="padding-global">
         <div className="container-large">
           <div className="padding-section-large hero-padding">
-            <div className="hero_component">
+            <div className="w-layout-grid hero_component">
               <div id="w-node-c3f8dc7d-1c7b-3144-0f0a-ae93ccef740f-3b306ed1" className="hero_content">
                 <div className="margin-bottom margin-small">
                   <h1 
@@ -121,12 +119,11 @@ const Hero: React.FC = () => {
                 </div>
               </div>
               <div className="hero_image-wrapper">
-                <Image
+                <img
                   ref={heroImageRef}
                   className="hero-image-combined"
-                  src="/images/testimage1.webp"
-                  width={1539}
-                  height={1080}
+                  src="/images/hero-image-combination.webp"
+                  width="820"
                   alt="two photos overlapping with rough edges, the top photo features a woman sitting in a hammock smiling with sunglasses on. the bottom photo features two happy women hugging and smiling for a selfie photo."
                   style={{
                     opacity: 0,
@@ -135,6 +132,7 @@ const Hero: React.FC = () => {
                   sizes="(max-width: 991px) 100vw, 820px"
                   data-w-id="24a30a65-1f93-6246-4c56-395d0a4f1961"
                   loading="eager"
+                  srcSet="/images/hero-image-combination-p-500.webp 500w, /images/hero-image-combination-p-800.webp 800w, /images/hero-image-combination-p-1080.webp 1080w, /images/hero-image-combination.webp 1539w"
                 />
               </div>
             </div>

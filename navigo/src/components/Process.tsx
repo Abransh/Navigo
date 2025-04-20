@@ -1,6 +1,5 @@
 // src/components/Process.tsx
 import React, { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
@@ -10,62 +9,78 @@ if (typeof window !== 'undefined') {
 }
 
 const Process: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
   const squiggleRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Create a timeline for the squiggle animation
-    const squiggleAnimation = gsap.timeline({
-      scrollTrigger: {
-        trigger: squiggleRef.current,
-        start: 'top bottom',
-        end: 'top center',
-        scrub: true
+    // Set up animations when component mounts
+    if (typeof window !== 'undefined') {
+      // Create a timeline for the squiggle animation
+      if (squiggleRef.current) {
+        const squiggleAnimation = gsap.timeline({
+          scrollTrigger: {
+            trigger: squiggleRef.current,
+            start: 'top bottom',
+            end: 'top center',
+            scrub: true
+          }
+        });
+        
+        squiggleAnimation.fromTo(
+          squiggleRef.current,
+          { rotation: -5, scale: 0.9 },
+          { rotation: 0, scale: 1, duration: 1 }
+        );
       }
-    });
 
-    // Animate the heading and description
-    gsap.from([headingRef.current, descriptionRef.current], {
-      y: 100,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: headingRef.current,
-        start: 'top bottom',
-        end: 'top center',
-        scrub: false
+      // Animate the heading and description
+      if (headingRef.current && descriptionRef.current) {
+        gsap.from([headingRef.current, descriptionRef.current], {
+          y: 100,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: 'top bottom',
+            end: 'top center',
+            toggleActions: 'play none none reverse'
+          }
+        });
       }
-    });
 
-    // Animate the cards with staggered entrance
-    const cards = cardsContainerRef.current?.querySelectorAll('[card-animation]');
-    if (cards) {
-      gsap.from(cards, {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: cardsContainerRef.current,
-          start: 'top bottom',
-          end: 'top center',
-          scrub: true
-        }
-      });
+      // Animate the cards with staggered entrance
+      const cards = cardsContainerRef.current?.querySelectorAll('[card-animation]');
+      if (cards && cards.length > 0) {
+        gsap.from(cards, {
+          y: 100,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: cardsContainerRef.current,
+            start: 'top bottom',
+            end: 'top center',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      }
     }
 
     // Cleanup function
     return () => {
       // Clean up ScrollTrigger instances when component unmounts
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
     };
   }, []);
 
   return (
-    <section className="section_process">
+    <section ref={sectionRef} className="section_process">
       <div className="padding-global">
         <div className="container-large">
           <div className="padding-section-large bottom-only">
@@ -144,7 +159,7 @@ const Process: React.FC = () => {
                     <h3 className="heading-style-h4 card-layout">Get matched with local companions</h3>
                   </div>
                   <p className="text_regular-normal">
-                    We&apos;'ll connect you with verified local students who share your interests and speak your language.
+                    We'll connect you with verified local students who share your interests and speak your language.
                   </p>
                   <img
                     src="/images/edge-work.svg"

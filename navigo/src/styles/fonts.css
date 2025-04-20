@@ -1,0 +1,40 @@
+/* src/styles/fonts.css */
+/* Font declarations for Navigo */
+
+@font-face {
+    font-family: 'Mattone';
+    src: url('/fonts/Mattone-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Fieldsdisplay';
+    src: url('/fonts/FieldsDisplay-Medium.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Karla Variablefont Wght';
+    src: url('/fonts/Karla-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 200 800; /* Variable font weight range */
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  /*
+   * HOW TO USE THESE FONTS:
+   *
+   * The fonts are referenced in the Webflow CSS using these font-family names:
+   * - 'Mattone' - Used for buttons and accents (bold weight)
+   * - 'Fieldsdisplay' - Used for headings (medium weight)
+   * - 'Karla Variablefont Wght' - Used for body text (variable weight)
+   *
+   * To ensure fonts display correctly:
+   * 1. Download the font files into the /public/fonts directory
+   * 2. Import this CSS file in your _app.tsx or layout.tsx
+   * 3. Don't modify the font-family names in the Webflow CSS
+   */

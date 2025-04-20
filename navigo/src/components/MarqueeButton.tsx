@@ -11,8 +11,8 @@ const MarqueeButton: React.FC<MarqueeButtonProps> = ({ href }) => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
   
   useEffect(() => {
-    // Create hover animation
-    if (buttonRef.current) {
+    if (typeof window !== 'undefined' && buttonRef.current) {
+      // Create hover animation
       buttonRef.current.addEventListener('mouseenter', () => {
         gsap.to(buttonRef.current, { 
           scale: 1.02, 
@@ -28,17 +28,30 @@ const MarqueeButton: React.FC<MarqueeButtonProps> = ({ href }) => {
           ease: 'power1.out'
         });
       });
+      
+      // Animate marquee text - continuous scrolling
+      const marquees = document.querySelectorAll('.marquee-button_marquee');
+      
+      if (marquees.length > 0) {
+        gsap.to(marquees[0], {
+          xPercent: -100,
+          repeat: -1,
+          duration: 15,
+          ease: 'linear'
+        });
+        
+        // Set the second marquee to continue where the first one ends
+        if (marquees[1]) {
+          gsap.set(marquees[1], { xPercent: 0 });
+          gsap.to(marquees[1], {
+            xPercent: -100,
+            repeat: -1,
+            duration: 15,
+            ease: 'linear'
+          });
+        }
+      }
     }
-    
-    // Animate marquee text
-    const marquees = document.querySelectorAll('.marquee-button_marquee');
-    
-    gsap.to(marquees, {
-      xPercent: -50,
-      repeat: -1,
-      duration: 15,
-      ease: 'linear'
-    });
     
     return () => {
       // Clean up event listeners

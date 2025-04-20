@@ -1,6 +1,5 @@
 // src/components/CardStack.tsx
 import React, { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
@@ -17,15 +16,22 @@ const CardStack: React.FC = () => {
   const cardMidSecondRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Create animations for card stack
-    if (componentRef.current) {
+    // Create animations for card stack when component mounts
+    if (typeof window !== 'undefined' && componentRef.current) {
       // Get all cards
       const cards = [
         cardFirstRef.current,
         cardMidRef.current,
         cardBotRef.current,
         cardMidSecondRef.current
-      ];
+      ].filter(Boolean); // Filter out any null refs
+      
+      // Set initial positioning for cards
+      gsap.set(cards, { 
+        y: (index) => index * 20, 
+        opacity: (index) => 1 - (index * 0.2),
+        zIndex: (index) => cards.length - index
+      });
       
       // Create a ScrollTrigger for each card to control its position
       cards.forEach((card, index) => {
@@ -33,18 +39,21 @@ const CardStack: React.FC = () => {
         
         ScrollTrigger.create({
           trigger: componentRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          pin: card,
-          pinSpacing: false,
+          start: "top 80%",
+          end: "bottom 20%",
           scrub: true,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            // Calculate opacity based on scroll position
-            const opacity = 1 - (self.progress * 2 - index * 0.5);
+            // Calculate position based on scroll
+            const progress = self.progress;
+            const y = 20 * index * (1 - progress * 1.5);
+            const opacity = 1 - (index * 0.2) - (progress * 0.5 * (index + 1));
+            
             gsap.to(card, { 
-              opacity: Math.max(0, Math.min(1, opacity)), 
-              duration: 0.1 
+              y: y,
+              opacity: Math.max(0, opacity), 
+              duration: 0.1,
+              ease: "power1.out"
             });
           }
         });
@@ -52,8 +61,10 @@ const CardStack: React.FC = () => {
     }
 
     return () => {
-      // Clean up ScrollTrigger instances
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      // Clean up ScrollTrigger instances when component unmounts
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
     };
   }, []);
 
